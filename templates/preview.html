@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Preview</title>
+</head>
+<body>
+    <h1>Order Preview</h1>
+    <p><strong>Delivery Address:</strong> {{ delivery_address }}</p>
+    <p><strong>Phone Number:</strong> {{ phone_number }}</p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Quantity Ordered</th>
+                <th>Price</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product['stock_name'] }}</td>
+                <td>{{ product['quantity_ordered'] }}</td>
+                <td>${{ product['price'] }}</td>
+                <td>${{ product['total'] }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Total Cost: ${{ total_cost }}</h3>
+    <h3>Shipping Cost: ${{ shipping_cost }}</h3>
+    <h2>Grand Total: ${{ total_cost + shipping_cost }}</h2>
+
+    <form action="/confirm_order" method="POST">
+        <input type="hidden" name="delivery_address" value="{{ delivery_address }}">
+        <input type="hidden" name="pin_code" value="{{ pin_code }}">
+        <input type="hidden" name="phone_number" value="{{ phone_number }}">
+        <button type="submit">Confirm Order</button>
+    </form>
+</body>
+</html>
